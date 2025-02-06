@@ -1,3 +1,4 @@
+^(.*\.)?s3\..*\.backblazeb2\.com(\/.*)?
 campaign-statistics.com
 nvidia.com
 saudi-k.com
