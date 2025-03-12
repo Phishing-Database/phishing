@@ -4,7 +4,7 @@ campaign-statistics\.com
 nvidia\.com
 saudi-k\.com
 surveysparrow\.com
-^(www|\.)targobank-kontowechselservice\.de
+^(www\.)?targobank-kontowechselservice\.de
 ^(.*\.)?exo\.io
 ^(alpha|app|beta-qbo)\.tieit\.io
 rtu\.lv
