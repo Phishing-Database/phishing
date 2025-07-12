@@ -19,7 +19,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          apt install -y gawk
+          sudo apt install -y gawk
 
       - name: Sort list
         run: |
