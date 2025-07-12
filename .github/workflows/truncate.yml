@@ -1,10 +1,7 @@
-name: Sort Lists
+name: Truncate Lists
 on:
-  pull_request:
-  push:
-    branches:
-      - master
-      - restructure
+  schedule:
+    - cron: "0 0 1 * *"
 
 jobs:
   sort:
@@ -24,11 +21,11 @@ jobs:
       - name: Sort list
         run: |
           # Sort all .list files in the additions directory
-          find ${{ github.workspace }}/additions -type f -iname "*.list" -exec sort -o {} {} \;
+          find ${{ github.workspace }}/additions -type f -ipath '*temporary*' -exec truncate -s0 {} \;
 
           # Sort all .list files in the falsepositives directory
-          find ${{ github.workspace }}/falsepositives -type f -regextype posix-extended -iregex ".*\.(all|reg|rzdb)\.list" -exec awk -i inplace 'NR <= 5 { print; next } { print | "sort" }' {} \;
-          find ${{ github.workspace }}/falsepositives -type f -regextype posix-extended -not -iregex ".*\.(all|reg|rzdb)\.list" -exec sort -o {} {} \;
+          find ${{ github.workspace }}/falsepositives -type f -ipath '*temporary*' -regextype posix-extended -iregex ".*\.(all|reg|rzdb)\.list" -exec awk -i inplace 'NR > 5 { next } { print }' {} \;
+          find ${{ github.workspace }}/falsepositives -type f -ipath '*temporary*' -regextype posix-extended -not -iregex ".*\.(all|reg|rzdb)\.list" -exec truncate -s0 {} \;
 
       - name: Output changes
         run: git status
@@ -38,5 +35,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add .
-          git commit -a -m "Sort lists" || echo "No changes to commit"
+          git commit -a -m "Truncate temporary lists" || echo "No changes to commit"
           git push
