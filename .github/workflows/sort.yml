@@ -1,0 +1,37 @@
+name: Sort lists
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+      - restructure
+
+jobs:
+  sort:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout the repo
+        uses: actions/checkout@main
+
+      - name: Sort list files
+        run: |
+          # Sort all .list files in the additions directory
+          find ${{ github.workspace }}/additions -iname "*.list" -exec sort -o {} {} \;
+
+          # Sort all .list files in the falsepositives directory
+          find ${{ github.workspace }}/falsepositives -type f -regextype posix-extended -iregex ".*\.(all|reg|rzdb)\.list" -exec awk -i inplace 'NR <= 5 { print; next } { print | "sort" }' {} \;
+          find ${{ github.workspace }}/falsepositives -type f -regextype posix-extended -not -iregex ".*\.(all|reg|rzdb)\.list" -exec -exec sort -o {} {} \;
+
+      - name: Output changes
+        run: git status
+
+      - name: Push changes back to the repository
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "ID+github-actions[bot]@users.noreply.github.com"
+          git commit -a -m "Sort lists" || echo "No changes to commit"
+          git push
