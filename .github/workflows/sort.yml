@@ -29,7 +29,7 @@ jobs:
 
           # Sort all .list files in the falsepositives directory
           find ${{ github.workspace }}/falsepositives -type f -regextype posix-extended -iregex ".*\.(all|reg|rzdb)\.list" -exec awk -i inplace 'NR <= 5 { print; next } { print | "sort" }' {} \;
-          find ${{ github.workspace }}/falsepositives -type f -regextype posix-extended -not -iregex ".*\.(all|reg|rzdb)\.list" -exec -exec sort -o {} {} \;
+          find ${{ github.workspace }}/falsepositives -type f -regextype posix-extended -not -iregex ".*\.(all|reg|rzdb)\.list" -exec sort -o {} {} \;
 
       - name: Output changes
         run: git status
