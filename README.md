@@ -1,66 +1,102 @@
-# Phishing
-Central Repository for Adding or Removing Domains / Links from the [Phishing.Database][PD] project
+<img src="https://github.com/Phishing-Database/assets/raw/master/phishing-logo.jpg" alt="Phishing Domain Status Testing Repo"/>
 
-## Toc
-<!-- TOC -->
-* [Phishing](#phishing)
-  * [Toc](#toc)
-  * [Committing Phishing records](#committing-phishing-records)
-    * [Add Phishing Domains](#add-phishing-domains)
-    * [Add Phishing Uri - Links](#add-phishing-uri---links)
-  * [Add phishing by IP](#add-phishing-by-ip)
-  * [False Positives](#false-positives)
-<!-- TOC -->
+# Phishing.Database: Phishing <!-- omit in toc -->
 
-## Committing Phishing records
+This is the central repository for adding or removing domains, links, and IPs from the [Phishing.Database](https://github.com/Phishing-Database) project.
 
-DNS systems can operate on the domain level (everything between the protocol and the first /) while IE Squid-proxy or uBlock Origin can operate on both sides of the slashes and protocol independently.
+Since pushing to the main repository is prohibited, this repository serves as an
+area for anyone to submit changes to the Phishing Database.
 
-### Add Phishing Domains
+> [!CAUTION]
+> We are in the process of migrating this repository to a new structure. The files at the top-level directories will be removed in the future. Please use the new structure for contributions.
 
-| File                                                 | Contents                                                                                                                                                                                                                                                                                                                                      |
-|------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| [add-domain](../master/add-domain)                   | This list are matching a records `1 to 1` or this domain only (hosts file style RFC:952 and RFC:953)                                                                                                                                                                                                                                          |
-| [add-wildcard-domain](../master/add-wildcard-domain) | This domain and all it's subdomains should be added. This means if an entire domain is being used for phishing i.e. `phishing.example.com`, then add it to the domain list (add-domain). If the phishing threat resides inside a subfolder of the domain i.e. `/sub/oath/phishing-script/payload.php` then add it to the url list (add-link). |
+# Table of Contents <!-- omit in toc -->
 
-include the fully qualified domain name (fqdn) only (no protocol like http /
-https) and no path (/something)
+- [Additions and False Positives](#additions-and-false-positives)
+  - [Additions](#additions)
+    - [Domains](#domains)
+    - [Links](#links)
+    - [IPs](#ips)
+  - [False Positives](#false-positives)
+    - [Domains](#domains-1)
+    - [Links](#links-1)
+    - [IPs](#ips-1)
+- [Repository Operations](#repository-operations)
 
-### Add Phishing Uri - Links
 
-To add either a domain, subdomain or a number of URI's to the project, you should be understanding a bit about how it is working.
+# Additions and False Positives
 
-| File                           | Contents                    |
-|--------------------------------|-----------------------------|
-| [add-link](../master/add-link) | this URI, and only this URI |
+We now categorize contributions into two main directories:
 
-## Add phishing by IP
+- `additions/`: Contains files for adding phishing domains, links, and IPs.
+- `falsepositives/`: Contains files for whitelisting false positives.
 
-| File                                                             | Contents                                                                                    |
-|------------------------------------------------------------------|---------------------------------------------------------------------------------------------|
-| [IP-addr.cidr.in-addr.arpa](../master/IP-addr.cidr.in-addr.arpa) | This is a list for blocking phishing by IP address in CIDR notated in-arpa style (rfc:5737) |
-| [IP-addr.cidr.list](../master/IP-addr.cidr.list)                 | This is a list for blocking phishing by IP address in CIDR notation style (rfc:5737)        |
-| [IP-addr.in-addr.arpa](../master/IP-addr.in-addr.arpa)           | This is a list for blocking phishing by IP address in in-arpa style (rfc:5737)              |
-| [IP-addr.list](../master/IP-addr.list)                           | This is a list for blocking phishing by IP address in (strait forward) style (rfc:5737)     |
+Within these directories, we categorize contributions further into 2 timeframes:
+
+- `permanent/`: For contributions that are expected to remain valid indefinitely.
+- `temporary/`: For contributions that are expected to be valid for a short period of time. Please be aware that the content of the files in this directory will be removed at the beginning of each month.
+
+Within the above directories, you can find the files listed bellow.
+
+## Additions
+
+### Domains
+
+| Filename                             | Description                                                                                    |
+| ------------------------------------ | ---------------------------------------------------------------------------------------------- |
+| `additions/**/domains.list`          | Container a list of domains to be added to the Phishing.Database.                              |
+| `additions/**/domains.wildcard.list` | Contains a list of domains to be added and considered as wildcards - as we meet them overtime. |
+
+
+### Links
+
+| Filename                  | Description                                                           |
+| ------------------------- | --------------------------------------------------------------------- |
+| `additions/**/links.list` | Contains a list of links / URLs to be added to the Phishing.Database. |
+
+
+### IPs
+
+| Filename                          | Description                                                                                                   |
+| --------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| `additions/**/ips.list`           | Contains a list of IPs to be added to the Phishing.Database.                                                  |
+| `additions/**/ips.cidr.list`      | Contains a list of IPs to be added to the Phishing.Database in CIDR notation. _(cf: RFC-5737)_                |
+| `additions/**/ips.arpa.list`      | Contains a list of IPs to be added to the Phishing.Database in ARPA/PTR format. _(cf: RFC-5737)_              |
+| `additions/**/ips.cidr.arpa.list` | Contains a list of IPs to be added to the Phishing.Database in CIDR notation in ARPA format. _(cf: RFC-5737)_ |
+
 
 ## False Positives
 
-To be able to keep the whitelist as precise as possible, the Phishing DB are
-using 4 types of list.
+> [!NOTE]
+> The Phishing.Database project uses the [Givilsta](https://github.com/funilrys/givilsta) project to process any files in the `falsepositives/` directory against the main repository. Please keep that in mind when you are tented to add huge lists of domains, links, or IPs.
 
-| File                                                           | Contents                                                                                                                                                                                                                                                    |
-|----------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| [falsepositive.list](../master/falsepositive.list)             | Matching `1 on 1`. This means, should we only whitelist IE. `subdomain1.example.com` but not `subdomain2.example.com`, then this is the list.                                                                                                               |
-| [falsepositive_all.list](../master/falsepositive_all.list)     | (ALL) is [wildcard] based. This means every subdomains from `example.net` and lover level such as `subdomain1.example.net` & `subdomain2.example.net`. This list also accepts full regex. Except from ending `$` and `\\` as this is done by automatically. |
-| [falsepositive_regex.list](../master/falsepositive_regex.list) | (REGEX) You are a fan of regex ? We are too! When working with highly volatile dataset, we want to simply use a regular expression (short regex) to do the task. [REG]                                                                                      |
-| [falsepositive_rzd.list](../master/falsepositive_rzd.list)     | (RZD) will probably never be used... Read the full doc here before attempting to making changes to it: [RZD]                                                                                                                                                |
+### Domains
 
-For better understanding of these specialities, you are welcome to read the tools [Readme](https://github.com/Ultimate-Hosts-Blacklist/whitelist/tree/script#special-markers).
+| Filename                              | Description                                                                                                                                                         |
+| ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `falsepositives/**/domains.list`      | Contains a list of domains to be whitelisted as false positives. This is a 1:1 match.                                                                               |
+| `falsepositives/**/domains.all.list`  | Contains a list of domains to be whitelisted as false positives. Any entry in this file will be prefixed with Givilsta's `ALL` flag _(cf: see Givilsta's readme)_.  |
+| `falsepositives/**/domains.reg.list`  | Contains a list of domains to be whitelisted as false positives. Any entry in this file will be prefixed with Givilsta's `REG` flag _(cf: see Givilsta's readme)_.  |
+| `falsepositives/**/domains.rzdb.list` | Contains a list of domains to be whitelisted as false positives. Any entry in this file will be prefixed with Givilsta's `RZDB` flag _(cf: see Givilsta's readme)_. |
 
-[PD]: https://github.com/Phishing-Database/Phishing.Database
+### Links
 
-[REG]: https://github.com/funilrys/tivilsta?tab=readme-ov-file#reg--the-regular-expression-rule
+| Filename                       | Description                                                                         |
+| ------------------------------ | ----------------------------------------------------------------------------------- |
+| `falsepositives/**/links.list` | Contains a list of links to be whitelisted as false positives. This is a 1:1 match. |
 
-[wildcard]: https://github.com/funilrys/tivilsta?tab=readme-ov-file#all--the-ends-with-rule
+### IPs
 
-[RZD]: https://github.com/funilrys/tivilsta?tab=readme-ov-file#rzd--the-broad-and-powerful-rule
+| Filename                               | Description                                                                                                   |
+| -------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| `falsepositives/**/ips.list`           | Contains a list of IPs to be whitelisted as false positives. This is a 1:1 match.                             |
+| `falsepositives/**/ips.cidr.list`      | Contains a list of IPs to be whitelisted as false positives in CIDR notation. _(cf: RFC-5737)_                |
+| `falsepositives/**/ips.arpa.list`      | Contains a list of IPs to be whitelisted as false positives in ARPA/PTR format. _(cf: RFC-5737)_              |
+| `falsepositives/**/ips.cidr.arpa.list` | Contains a list of IPs to be whitelisted as false positives in CIDR notation in ARPA format. _(cf: RFC-5737)_ |
+
+
+# Repository Operations
+
+The state of the `master` branch will be automatically fetched every few hours and integrated into
+the next update of the main repository. The latest state of the fetched data will
+be reflected in the [frozen-dataset](https://github.com/Phishing-Database/frozen-datasets) repository.

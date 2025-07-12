@@ -1,0 +1,17 @@
+# Everything listed here will be automatically prefixed with the 'REG' flag.
+# Please do not add any other flag to the domains listed here.
+#
+# Tool & Specification: https://github.com/funilrys/givilsta/blob/master/README.md
+#
+^(.*\.)?s3\..*\.backblazeb2\.com(\/.*)?
+^(api|f)(\d{0,3})?\.backblazeb2\.com(\/.*)?
+campaign-statistics\.com
+nvidia\.com
+saudi-k\.com
+surveysparrow\.com
+^(www\.)?targobank-kontowechselservice\.de
+^(.*\.)?exo\.io
+^(alpha|app|beta-qbo)\.tieit\.io
+rtu\.lv
+idtech\.no
+vuagame\.store
