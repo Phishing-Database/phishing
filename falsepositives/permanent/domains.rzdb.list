@@ -3,7 +3,7 @@
 #
 # Tool & Specification: https://github.com/funilrys/givilsta/blob/master/README.md
 #
-# string plus all possible TLD.
 # This list will tell the system to explicitly check for the given
+# string plus all possible TLD.
 frau-z-macht-das.de
 vodafone.de

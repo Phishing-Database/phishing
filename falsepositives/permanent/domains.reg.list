@@ -3,15 +3,15 @@
 #
 # Tool & Specification: https://github.com/funilrys/givilsta/blob/master/README.md
 #
+^(.*\.)?exo\.io
 ^(.*\.)?s3\..*\.backblazeb2\.com(\/.*)?
+^(alpha|app|beta-qbo)\.tieit\.io
 ^(api|f)(\d{0,3})?\.backblazeb2\.com(\/.*)?
+^(www\.)?targobank-kontowechselservice\.de
 campaign-statistics\.com
+idtech\.no
 nvidia\.com
+rtu\.lv
 saudi-k\.com
 surveysparrow\.com
-^(www\.)?targobank-kontowechselservice\.de
-^(.*\.)?exo\.io
-^(alpha|app|beta-qbo)\.tieit\.io
-rtu\.lv
-idtech\.no
 vuagame\.store
