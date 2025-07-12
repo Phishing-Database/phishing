@@ -1,0 +1,13 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended", ":disableDependencyDashboard"],
+  "ignorePaths": [],
+  "separateMajorMinor": true,
+  "assignees": ["funilrys", "mitchellkrogza"],
+  "packageRules": [
+    {
+      "matchManagers": ["github-actions"],
+      "groupName": "github-actions deps"
+    }
+  ]
+}
